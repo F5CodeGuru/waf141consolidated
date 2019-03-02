@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Exercise 3.1: Blocking Policy &#8212; GoodWAFSec Docs 1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/f5.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exercise 3.2: Protection from common exploit vectors" href="../lab2/lab2.html" />
+    <link rel="prev" title="Module 3: Blocking, Tuning and Attacking the Policy" href="../module3.html" />
+<!--
+# Copyright 2017 F5 Networks
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<link href="https://cdn.f5.com/favicon.ico" rel="icon">
+<script src="https://use.fontawesome.com/21fb8a09c3.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+  </head><body>
+  <div class="container-fluid">
+  <div class="row corp-header">
+    <div class="container corp-header">
+      <div class="container corp-menu">
+        <ul>
+          <li><a href="https://f5.com" class="internalLink">F5.com</a></li>
+          <li><a href="https://support.f5.com">Support</a></li>
+          <li><a href="https://devcentral.f5.com">Community</a></li>
+          <li><a href="https://github.com/F5Networks">GitHub</a></li>
+          <li><a href="https://f5.com/about-us/careers">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pageHeader">
+    <div class="container stat">
+      <div class="col-xs-12 stat">
+        <a class="internalLink" href="https://f5.com">
+          <img class="logo" src="https://cdn.f5.com/websites/support/assets/images/logo.svg" width="50" height="44" alt="F5 Networks" title="F5 Networks" border="0">
+        </a>
+        <ul id="MainMenu" class="main-menu">
+          <li>
+            <a href="#">Products
+              <span class="indicator"><span class="arrow-up"></span></span>
+            </a>
+
+            <div class="menu-panel soft-hide" id="ProductsSubmenu">
+              <div class="container">
+                <ul class="submenu col-sm-11">
+                  <li class="third"><span class="a-mm-h">BIG-IP Controllers</span>
+                    <ul>
+                      <li><a href="/products/connectors/cf-bigip-ctlr/latest" data-link-type="Nav: Mega">F5 BIG-IP Controller for Cloud Foundry</a></li>
+                      <li><a href="/products/connectors/k8s-bigip-ctlr/latest" data-link-type="Nav: Mega">F5 BIG-IP Controller for Kubernetes/OpenShift</a></li>
+                      <li><a href="/products/connectors/marathon-bigip-ctlr/latest" data-link-type="Nav: Mega">F5 BIG-IP Controller for Marathon</a></li>
+                    </ul>
+                    <!-- unnecessary right now, we have them all listed>
+                      <span class="seemore"><a data-link-type="Nav: Mega" href="/products/connectors">See all </a></span><-->
+                    <span class="a-mm-h">Application Services Proxy</span>
+                    <ul>
+                      <li><a href="/products/asp/latest" data-link-type="Nav: Mega">F5 Application Services Proxy</a></li>
+                      <li><a href="/products/connectors/f5-kube-proxy/latest" data-link-type="Nav: Mega">F5-kube-proxy</a></li>
+                      <li><a href="/products/connectors/marathon-asp-ctlr/latest" data-link-type="Nav: Mega">F5 ASP Controller for Marathon</a></li>
+                    </ul>
+                    <!-- unnecessary>
+                    <span class="seemore"><a href="/products/asp/latest">See all </a></span>
+                    --->
+                  </li>
+                  <li class="divider"></li>
+                  <li class="third"><span class="a-mm-h">OpenStack</span>
+                    <ul>
+                      <li><a href="/products/openstack/agent/latest" data-link-type="Nav: Mega">F5 Agent - OpenStack Neutron</a></li>
+                      <li><a href="/products/openstack/lbaasv2-driver/latest" data-link-type="Nav: Mega">F5 Driver - OpenStack LBaaS</a></li>
+                      <li><a href="/products/openstack/heat-plugins/latest" data-link-type="Nav: Mega">F5 Plugins - OpenStack Heat</a></li>
+                     </ul>
+                    <!--
+                    <span class="seemore"><a href="/products/index.html">See all </a></span>
+                    --->
+                  </li>
+                  <li class="divider"></li>
+                  <li class="third"><span class="a-mm-h">Orchestration Templates</span>
+                  <ul>
+                    <li><a href="https://github.com/F5Networks/f5-aws-cloudformation" target="_blank">F5 Templates for AWS CloudFormation</a> </li>
+                    <li><a href="https://github.com/F5Networks/f5-azure-arm-templates" target="_blank">F5 Templates for Azure ARM</a> </li>
+                    <li><a href="https://github.com/F5Networks/f5-google-gdm-templates" target="_blank">F5 Templates for Google Cloud Deployment Manager</a> </li>
+                    <li><a href="/products/templates/openstack-heat/latest" data-link-type="Nav: Mega">F5 Templates for OpenStack Heat</a></li>
+                  </ul>
+                    <!--
+                    <span class="seemore"><a href="/products/index.html">See all </a></span>
+                    --->
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="#">Cloud & Container Integrations
+              <span class="indicator"><span class="arrow-up"></span></span>
+            </a>
+
+            <div class="menu-panel soft-hide" id="ContainersSubmenu">
+              <div class="container">
+                <ul class="submenu col-sm-11">
+                    <!--- HIDE, ALL ARE CURRENTLY DISPLAYED>
+                    <span class="seemore"><a data-link-type="Nav: Mega" href="/containers/latest/">See all </a></span>
+                    --->
+                  <li class="third"><span class="a-mm-h">Clouds</span>
+                    <ul>
+                      <li><a href="/cloud/public/v1" data-link-type="Nav: Mega">AWS</a></li>
+                      <li><a href="/cloud/public/v1" data-link-type="Nav: Mega">Azure</a></li>
+                      <li><a href="/cloud/public/v1" data-link-type="Nav: Mega">Google Cloud</a></li>
+                      <li><a href="/cloud/openstack/" data-link-type="Nav: Mega">OpenStack</a></li>
+                    </ul>
+                    <!-- unnecessary right now>
+                    <span class="seemore"><a data-link-type="Nav: Mega" href="/cloud/">See all </a></span>
+                    <-->
+                  <li class="divider"></li>
+                  <li class="third"><span class="a-mm-h">Containers</span>
+                    <ul>
+                      <li><a href="/containers/latest/cloudfoundry/" data-link-type="Nav: Mega">Cloud Foundry</a> </li>
+                      <li><a href="/containers/latest/kubernetes/" data-link-type="Nav: Mega">Kubernetes</a></li>
+                      <li><a href="/containers/latest/marathon/" data-link-type="Nav: Mega">Mesos Marathon</a></li>
+                      <li><a href="/containers/latest/openshift/" data-link-type="Nav: Mega">OpenShift</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="#">Resources
+              <span class="indicator"><span class="arrow-up"></span></span>
+            </a>
+            <div class="menu-panel soft-hide" id="UPCProgramSubmenu">
+              <div class="container">
+                <ul class="submenu col-sm-11">
+                  <li class="third">
+                    <span class="a-mm-h">Downloads</span>
+                    <ul>
+                      <li><a target="_blank" data-link-type="Nav: Mega" href="https://hub.docker.com/r/f5networks/" class="internalLink">Docker Hub</a></li>
+                      <li><a target="_blank" data-link-type="Nav: Mega" href="https://store.docker.com/images/f5networks-asp" class="internalLink">Docker Store</a></li>
+                    </ul>
+                    <span class="a-mm-h">OpenSource</span>
+                  <ul>
+                    <li><a target="_blank" data-link-type="Nav: Mega" href="https://github.com/F5Networks" class="internalLink">F5Networks on GitHub</a></li>
+                    <li><a target="_blank" data-link-type="Nav: Mega" href="https://github.com/F5DevCentral" class="internalLink">F5DevCentral on GitHub</a></li>
+                  </ul>
+                    </li>
+                  <li class="divider"></li>
+                  <li class="third">
+                  <span class="a-mm-h">Training & Labs</span>
+                   <ul>
+                  <li><p>Learn how to get the most out of the F5 platform</p></li>
+                    <li><a href="/training/community">Community</a></li>
+                  </ul>
+                  </li>
+                  <li class="divider"></li>
+                  
+                  <li class="third">
+                    <a href="//university.f5.com" class="a-mm-h internalLink" target="_blank" data-link-type="Nav: Mega">F5 University</a>
+                    <ul>
+                      <li>
+                        <p>Get up to speed with free self-paced courses</p>
+                      </li>
+                    </ul>
+                    <a data-ng-href="https://devcentral.f5.com" class="a-mm-h internalLink" target="_blank" data-link-type="Nav: Mega" href="https://devcentral.f5.com">DevCentral</a>
+                    <ul>
+                      <li>
+                        <p>Join the community of 250,000+ technical peers</p>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> <!-- /container-fluid -->
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-3 sidebartoc">
+         <h4><a href="../../">GoodWAFSec Docs 1.0</a></h4>
+  <p class="caption">
+   <span class="caption-text">Current Page</span>
+  </p>
+  <ul>
+<li><a class="reference internal" href="#">Exercise 3.1: Blocking Policy</a><ul>
+<li><a class="reference internal" href="#objective">Objective</a></li>
+<li><a class="reference internal" href="#task-1-creating-blocking-policy">Task 1 - Creating Blocking policy</a></li>
+<li><a class="reference internal" href="#task-2-tuning-policy">Task 2 - Tuning policy</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../module3.html"
+                        title="previous chapter">Module 3: Blocking, Tuning and Attacking the Policy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../lab2/lab2.html"
+                        title="next chapter">Exercise 3.2: Protection from common exploit vectors</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/module3/lab1/lab1.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <form class="search" action="../../search.html" method="get">
+    <div>
+      <input type="text" name="q" placeholder="Search" style="padding-left: 6px;"/>
+      <!-- <input type="submit" value="Go" style="margin-top: 4px;"/> -->
+      <button type="submit" class="btn btn-primary btn-xs">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        
+      </div>
+      <div class="col-md-offset-3 col-sm-offset-3 main">
+        <h4>
+          <a href="/">Cloud Docs Home</a> &gt; <a href="../../index.html">GoodWAFSec Docs</a>
+          <span class="right"><a href="../../genindex.html">Index</a></span>
+        </h4>
+        
+  <div class="section" id="exercise-3-1-blocking-policy">
+<h1>Exercise 3.1: Blocking Policy<a class="headerlink" href="#exercise-3-1-blocking-policy" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this headline">¶</a></h2>
+<p>You will explore the blocking policy and settings.  The blocking policy used for this lab will focus on negative security using attack signatures.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Remove the existing transparent policy from your virtual before proceeding. Your virtual should look like this</p>
+</div>
+<a class="reference internal image-reference" href="../../_images/image110.PNG"><img alt="../../_images/image110.PNG" src="../../_images/image110.PNG" style="width: 600px;" /></a>
+</div>
+<div class="section" id="task-1-creating-blocking-policy">
+<h2>Task 1 - Creating Blocking policy<a class="headerlink" href="#task-1-creating-blocking-policy" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Go to <strong>Security &gt; Application Security &gt; Security Policies</strong> and click the Plus sign.</li>
+<li>At the far right change the setting to Advanced</li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image15_3_1.png"><img alt="../../_images/image15_3_1.png" src="../../_images/image15_3_1.png" style="width: 600px;" /></a>
+<dl class="docutils">
+<dt>Fill out the following -</dt>
+<dd><ul class="first last simple">
+<li>Policy name - <code class="docutils literal notranslate"><span class="pre">Blocking_Policy</span></code></li>
+<li>Description - <code class="docutils literal notranslate"><span class="pre">leave</span> <span class="pre">blank</span></code></li>
+<li>Policy type -  <code class="docutils literal notranslate"><span class="pre">Security</span></code></li>
+<li>Policy Template -  <code class="docutils literal notranslate"><span class="pre">Rapid</span> <span class="pre">Deployment</span> <span class="pre">Policy</span></code></li>
+<li>Virtual Server -  <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span> <span class="pre">(HTTPS)</span></code></li>
+<li>Learning Mode -  <code class="docutils literal notranslate"><span class="pre">Manual</span></code></li>
+<li>Enforcement Mode -  <code class="docutils literal notranslate"><span class="pre">Blocking</span></code></li>
+<li>Application Language -  <code class="docutils literal notranslate"><span class="pre">Unicode</span> <span class="pre">(utf-8)</span></code></li>
+<li>Server Technologies - <code class="docutils literal notranslate"><span class="pre">(leave</span> <span class="pre">blank)</span></code> (we will cover this option in a later exercise)</li>
+<li>Signature Staging -  <code class="docutils literal notranslate"><span class="pre">Disable</span></code>  (in a production environment consider leaving this set at 7 days)</li>
+<li>Policy is Case Sensitive -  <code class="docutils literal notranslate"><span class="pre">Disabled</span></code></li>
+<li>Differentiate between HTTP/WS and HTTPS/WSS URLs -  <code class="docutils literal notranslate"><span class="pre">Enabled</span></code></li>
+</ul>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../../_images/image1-1.png"><img alt="../../_images/image1-1.png" src="../../_images/image1-1.png" style="width: 600px;" /></a>
+<ol class="arabic simple" start="3">
+<li>Click <strong>Create Policy</strong></li>
+<li>Go to <strong>Security &gt; Application Security &gt; Policy Building &gt; Learning and Blocking settings</strong></li>
+<li>Make sure <code class="docutils literal notranslate"><span class="pre">Blocking_Policy</span></code> is selected in the Current edited security policy.</li>
+<li>At the far right across from General Settings ensure Advanced is selected.</li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image16_3_1.png"><img alt="../../_images/image16_3_1.png" src="../../_images/image16_3_1.png" style="width: 600px;" /></a>
+<ol class="arabic simple" start="7">
+<li>Click on <strong>Blocking Settings</strong></li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image1_3_1.png"><img alt="../../_images/image1_3_1.png" src="../../_images/image1_3_1.png" style="width: 600px;" /></a>
+<ol class="arabic simple" start="8">
+<li>Click the <strong>Block</strong> Check box at the top of to select all then click it again to clear Block from all entries.  Then click <strong>Change</strong>.</li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image2_3_1.png"><img alt="../../_images/image2_3_1.png" src="../../_images/image2_3_1.png" style="width: 600px;" /></a>
+<ol class="arabic simple" start="9">
+<li>Under Policy Building Settings  expand the Attack Signatures options</li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image23.PNG"><img alt="../../_images/image23.PNG" src="../../_images/image23.PNG" style="width: 600px;" /></a>
+<ol class="arabic simple" start="10">
+<li>Click on the <strong>Change</strong> button at the far right to bring up the <strong>Select Policy Attack Signature sets</strong> and choose to add both <strong>High Accuracy signature sets and SQL Injection Signatures</strong> then click <strong>Change</strong>.</li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image9_3_1.png"><img alt="../../_images/image9_3_1.png" src="../../_images/image9_3_1.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image10_3_1.png"><img alt="../../_images/image10_3_1.png" src="../../_images/image10_3_1.png" style="width: 600px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For this lab Signature Staging has been disbaled.  In a production environment you should consider using staging to allow yourself mitigation time before new signatures are implemented.</p>
+</div>
+<ol class="arabic simple" start="11">
+<li>Ensure that the blocking checkbox has been unchecked for all signatures.</li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image17_3_1.png"><img alt="../../_images/image17_3_1.png" src="../../_images/image17_3_1.png" style="width: 600px;" /></a>
+<ol class="arabic simple" start="12">
+<li>You will click Save and Apply Policy at this point.</li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/images11_3_1.png"><img alt="../../_images/images11_3_1.png" src="../../_images/images11_3_1.png" style="width: 600px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will see that the policy will apply with errors.  This is because the Policy is set to blocking but we do not have any settings currently in blocking since we unchecked the blocking options.  At this point you will think this is counter intuitive.  Why would you set a policy in blocking and then not block anything?  This is to illustrate that you can begin building your policy in blocking mode from the start.  The policy will operate as if it were in transparent mode.  When you are ready to begin blocking traffic check the block option for that function(s).  At this point we will test the blocking policy, which is in blocking mode, but no functions are currently in blocking.</p>
+</div>
+<a class="reference internal image-reference" href="../../_images/image12_3_1.png"><img alt="../../_images/image12_3_1.png" src="../../_images/image12_3_1.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="task-2-tuning-policy">
+<h2>Task 2 - Tuning policy<a class="headerlink" href="#task-2-tuning-policy" title="Permalink to this headline">¶</a></h2>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">For this lab we will explore the settings for tuning the policy but will not change the settings.</p>
+</div>
+<ol class="arabic simple">
+<li>Go to <strong>Security &gt; Application Security &gt; Policy Building &gt; Learning and Blocking Settings</strong></li>
+<li>Under the <strong>General Settings</strong> you will see various settings for Enforcement, Learning Mode and Learning Speed.  For this lab the policy should be set to <strong>Blocking with Manual Learning and a learning speed of fast.</strong></li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image4_3_1.png"><img alt="../../_images/image4_3_1.png" src="../../_images/image4_3_1.png" style="width: 600px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Depending on the setting you choose for Learning Mode you may find additional options but don’t save any changes.</p>
+</div>
+<a class="reference internal image-reference" href="../../_images/image5_3_1.png"><img alt="../../_images/image5_3_1.png" src="../../_images/image5_3_1.png" style="width: 600px;" /></a>
+<ol class="arabic simple" start="3">
+<li>Under Policy Building Process you will find there are settings for Loosen Policy and Tighten Policy.</li>
+</ol>
+<p>Loosen Policy would be used when there have been changes to the application.  Policy Builder will identify legitmate traffic based on repeated behavior from a sufficient number of sources that you set.
+Tighten Policy only applies when you are using automatic learning.  The policy builder will refine the policy until the number of security policy changes has been reached.
+Track Site Changes only applies to automatic learning.  If enabled this setting allows Policy Builder to discover changes to a web application.  Policy builder logs the changes and temporarily loosens the policy to make suggestions and adjustments.</p>
+<a class="reference internal image-reference" href="../../_images/image6_3_1.png"><img alt="../../_images/image6_3_1.png" src="../../_images/image6_3_1.png" style="width: 600px;" /></a>
+<ol class="arabic simple" start="4">
+<li>When you have made changes to this page make sure to always <strong>Save and Apply the policy.</strong></li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/image7_3_1.png"><img alt="../../_images/image7_3_1.png" src="../../_images/image7_3_1.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image8_3_1.png"><img alt="../../_images/image8_3_1.png" src="../../_images/image8_3_1.png" style="width: 600px;" /></a>
+</div>
+</div>
+
+
+        
+		     <div class="row next-prev-btn-row">
+           <div class="col-lg-12">
+           
+		        <a href="../module3.html" title="Module 3: Blocking, Tuning and Attacking the Policy" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
+           
+           
+              <a href="../lab2/lab2.html" title="Exercise 3.2: Protection from common exploit vectors" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+           
+		     </div>
+         </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+      <div class="container-fluid">
+      <div class="row">
+        <div class="content-fluid pre-footer">
+          <div class="blocks-container">
+            <div class="block">
+              <h3>Support Programs</h3>
+              <p>Regionally located support centers enable F5 to provide support in a number of languages through native-speaking support engineers.</p>
+              <a class="btn internalLink" data-ng-href="https://f5.com/support/support-offerings" target="_blank" href="https://f5.com/support/support-offerings">See more
+                <span class="icon-1x-right icon-new-window" data-icon="new-window">​</span>
+              </a>
+            </div>
+            <div class="block">
+              <h3>Contact Support</h3>
+              <p>
+                North America: 1-888-882-7535<br>
+                Outside North America: 800-11-275-435
+              </p>
+              <a class="btn internalLink" data-ng-href="https://f5.com/about-us/contact#regional-support" target="_blank" href="https://f5.com/about-us/contact#regional-support">Local Support Numbers
+                <span class="icon-1x-right icon-new-window" data-icon="new-window">​</span>
+              </a>
+            </div>
+            <div class="block">
+              <h3>Feedback and Help</h3>
+              <p>Have questions, suggestions, or just want to get something off your chest? Let us know.</p>
+              <a class="btn" data-ui-sref="siteFeedback" target="_blank" href="https://support.f5.com/csp/siteFeedback">Leave feedback</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="footer">
+          <div class="container">
+            <div class="col-sm-3 col-md-2">
+              <h4>About F5</h4>
+              <ul>
+                <li><a data-ng-href="https://f5.com/about-us/contact" target="_blank" data-link-type="footer" href="https://f5.com/about-us/contact" class="internalLink">Contact F5</a>
+                </li>
+                <li><a data-ng-href="https://f5.com/about-us/careers" target="_blank" data-link-type="footer" href="https://f5.com/about-us/careers" class="internalLink">Careers</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-3 col-md-2">
+              <h4>Education</h4>
+              <ul>
+                <li><a data-ng-href="https://f5.com/education/training" target="_blank" data-link-type="footer" href="https://f5.com/education/training" class="internalLink">Training</a>
+                </li>
+                <li><a data-ng-href="https://f5.com/education/certification" target="_blank" data-link-type="footer" href="https://f5.com/education/certification" class="internalLink">Certification</a>
+                </li>
+                <li><a data-ng-href="https://f5.com/education/training/free-courses" target="_blank" data-link-type="footer" href="https://f5.com/education/training/free-courses" class="internalLink">Free Online Training</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-sm-3 col-md-2">
+              <h4>F5 sites</h4>
+              <ul>
+              <li><a data-ng-href="https://f5.com" target="_blank" data-link-type="footer" href="https://f5.com" class="internalLink">F5.com</a>
+              </li>
+              <li><a data-ng-href="https://devcentral.f5.com" target="_blank" data-link-type="footer" href="https://devcentral.f5.com" class="internalLink">Community</a>
+              </li>
+              <li><a data-ng-href="https://partners.f5.com" target="_blank" data-link-type="footer" href="https://partners.f5.com" class="internalLink">Partners</a>
+              </li>
+          </ul>
+      </div>
+
+      <div class="col-sm-3 col-md-2">
+          <h4>Support Tasks</h4>
+          <ul>
+              <li><a data-ui-sref="mySupport.createServiceRequest" data-link-type="footer" href="https://support.f5.com/csp/my-support/service-request">Create Service Request </a>
+              </li>
+              <li><a data-ng-href="https://f5.com/about-us/contact#regional-support" target="_blank" data-link-type="footer" href="https://f5.com/about-us/contact#regional-support" class="internalLink">Contact Support</a>
+              </li>
+              <li><a data-ui-sref="siteFeedback" target="_blank" data-link-type="footer" href="https://support.f5.com/csp/siteFeedback">Leave feedback [+]</a>
+              </li>
+          </ul>
+      </div>
+
+      <div class="col-xs-12 col-md-3 right">
+          <h4>Connect with us</h4>
+          <ul class="social_icons">
+              <li><a href="//twitter.com/f5networks" target="_blank" data-name="twitter" data-type="" data-prefix="social" data-utf="E032" title="Twitter" class="externalLink"><i class="icon-1x icon-twitter icon-inverse-circle" data-link-type="footer"></i></a></li>
+              <li><a href="//www.linkedin.com/companies/f5-networks" target="_blank" class="linkedin externalLink" title="LinkedIn"><i class="icon-1x icon-linkedin icon-inverse-circle" data-link-type="footer"></i></a></li>
+              <li><a href="//www.facebook.com/f5networksinc" target="_blank" class="facebook externalLink" title="Facebook"><i class="icon-1x icon-facebook icon-inverse-circle" data-link-type="footer"></i></a></li>
+              <li><a href="//www.youtube.com/f5networksinc" target="_blank" class="youtube externalLink" title="YouTube"><i class="icon-1x icon-youtube icon-inverse-circle" data-link-type="footer"></i></a></li>
+              <li><a data-ng-href="https://devcentral.f5.com" target="_blank" class="devcentral internalLink" title="DevCentral" href="https://devcentral.f5.com"><i class="icon-1x icon-dc-pos icon-inverse-circle" data-link-type="footer"></i></a></li>
+          </ul>
+      </div>
+
+      <div class="content-fluid left">
+          <div class="col-xs-12">
+              <p>
+                  © Copyright <span class="ng-binding">2017</span> by F5 Networks, Inc. |
+                  <a data-ng-href="https://f5.com/about-us/policies" target="_blank" data-link-type="footer" href="https://f5.com/about-us/policies" class="internalLink">Policies</a> |
+                  <a data-ng-href="https://f5.com/about-us/policies/trademarks" target="_blank" data-link-type="footer" href="https://f5.com/about-us/policies/trademarks" class="internalLink">Trademarks</a>
+              </p>
+          </div>
+      </div>
+  </div>
+</div>
+  </div>
+</div>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../../_static/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    jQuery.noConflict(true)
+  </script>
+  </body>
+</html>
