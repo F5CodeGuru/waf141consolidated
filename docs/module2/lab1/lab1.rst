@@ -61,7 +61,7 @@ Attack 1: No Host Header - **Run this 10 times.**
   Content-Type: application/x-www-form-urlencoded
   Content-Length: 38
 
-  username=f5student&password=f5DEMOs4u!
+  username=f5student&password=password
 
 
 .. IMPORTANT:: When you copy and paste there may be whitespace in front of the headers. You will need to remove this manually or the request will not be sent. The requests can also be found in txt docs on the client desktop. If you copy and paste from there rather than this site, the whitespace will not be a problem.
@@ -157,7 +157,7 @@ Attack 2: XSS in HOST Header
   Content-Length: 38
   Host: <script>alert(document.cookie);</script>
 
-  username=f5student&password=f5DEMOs4u!
+  username=f5student&password=password
 
 .. image:: images/image15.PNG
     :width: 600 px
@@ -196,7 +196,7 @@ Example - The website may be accessed by non-browser clients attempting to bypas
   Host: LordVader
   Host: LukeSkywalker
 
-  username=f5student&password=f5DEMOs4u!
+  username=f5student&password=password
 
 3. Review Event Logs to ensure the attack is being mitigated. Notice the alert level is lower for this attack type due to less risk than a potential XSS as seen in the previous exercise.
 

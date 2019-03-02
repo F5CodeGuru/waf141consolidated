@@ -17,7 +17,7 @@ Objective
 
 .. NOTE:: If the Operating system prompts you to update system software, please decline
 
-#. RDP to the the jumpbox, launch Chrome (please be patient and don't click the icon multiple times. Chrome can take a few seconds to launch), click the BIG-IP bookmark and login to TMUI. admin/f5DEMOs4u!
+#. RDP to the the jumpbox, launch Chrome (please be patient and don't click the icon multiple times. Chrome can take a few seconds to launch), click the BIG-IP bookmark and login to TMUI. admin/password
 
 .. NOTE:: The XRDP service automatically opens a persistent shell in the top left corner of your desktop. Type **exit** to make it go away.
 
@@ -119,7 +119,7 @@ Test WAF Policy
 .. image:: images/image7.PNG
     :width: 600 px
 
-2. Login using **f5student/f5DEMOs4u!** credentials and interact with the webgoat application by browsing. Please refrain from experimenting with the site using any familiar "exploit" techniques.
+2. Login using **f5student/password** credentials and interact with the webgoat application by browsing. Please refrain from experimenting with the site using any familiar "exploit" techniques.
 
 #. On the BIG-IP, navigate to **Security > Event Logs > Application > Requests**.
 
@@ -251,7 +251,7 @@ This iRule will insert an X-Forward-For header with the value of a malicious Uni
 and look up the IP address in question for further information. There is also
 a tool to report IP addresses that have been incorrectly flagged.
 
-Further, you can ssh to the BIG-IP and login with ``root`` / ``f5DEMOs4u!`` to run
+Further, you can ssh to the BIG-IP and login with ``root`` / ``password`` to run
 the ``iprep_lookup`` command, similar to:
 
 [root@bigip1.Active.Standalone] config # **iprep_lookup 8.33.184.254**

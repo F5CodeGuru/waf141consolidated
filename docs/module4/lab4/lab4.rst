@@ -58,7 +58,7 @@ Task 1 - Deploy iApp with Security
 .. image:: images/image9_4_4.png
     :width: 600 px
 
-10.  Login with f5student and f5DEMOs4u!
+10.  Login with f5student and password 
 
 11.  You can try surfing around the application.  Try an injection attack.
 
@@ -104,7 +104,7 @@ Task 2 - Attack Application
 .. image:: images/image3.png
     :width: 600 px
 
-6.  Return to the WebGoat application and login with credentials f5student and f5DEMOs4u!
+6.  Return to the WebGoat application and login with credentials f5student and password 
 
 7.  From the left menu go to Injection Flaws --> SQL Injection and select exercise 7
 

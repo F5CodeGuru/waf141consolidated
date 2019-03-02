@@ -41,7 +41,7 @@ Task 1 - Exploring an attack
 .. image:: images/image19_3_2.PNG
     :width: 600 px
 
-7.  Return to the WebGoat application and login with credentials f5student and f5DEMOs4u!
+7.  Return to the WebGoat application and login with credentials f5student and password 
 
 8.  From the left menu go to Injection Flaws --> SQL Injection and select exercise 7
 

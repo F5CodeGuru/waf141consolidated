@@ -58,7 +58,7 @@ Task 1 - Server Technologies
   Content-Length: 38
   Host: DarthMaul
 
-  username=f5student&password=f5DEMOs4u!
+  username=f5student&password=password
 
 12. You should receive the Request Rejected Page as output.
 
@@ -74,7 +74,7 @@ Task 1 - Server Technologies
   Content-Length: 38
   Host: TheEmpireDidNothingWrong
 
-  username=f5student&password=f5DEMOs4u!
+  username=f5student&password=password
 
 14. Again, you should receive a Request Rejected page as output as shown here:
 

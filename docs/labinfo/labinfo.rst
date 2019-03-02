@@ -56,17 +56,17 @@ components:
      - 10.1.1.51
      - 10.1.10.51
      - N/A
-     - https-``ubuntu:ubuntu``
+     - rdp-``f5student:password``
    * - Bigip (bigip01)
      - 10.1.1.245
      - 10.1.10.245
      - 10.1.20.245
-     - https - ``admin:f5DEMOs4u!`` ssh - ``f5student:f5DEMOs4u!``
+     - https - ``admin:password``  ssh - ``f5student:password``
    * - Linux Server & WebGOAT app (server01)
      - 10.1.1.252
      - N/A
      - 10.1.20.252
-     - ssh - ``f5student:f5DEMOs4u!``
+     - ssh - ``f5student:password``
 
 
 A graphical representation of the lab:
