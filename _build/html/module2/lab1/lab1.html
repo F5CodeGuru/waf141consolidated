@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Exercise 2.1: Protocol Compliance &#8212; GoodWAFSec Docs 1.0 documentation</title>
+    <title>Exercise 2.1: Protocol Compliance &#8212; WAF141 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/css/f5.css" type="text/css" />
@@ -207,7 +207,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-3 col-md-3 sidebartoc">
-         <h4><a href="../../">GoodWAFSec Docs 1.0</a></h4>
+         <h4><a href="../../">WAF141 1.0</a></h4>
   <p class="caption">
    <span class="caption-text">Current Page</span>
   </p>
@@ -220,6 +220,7 @@
 <li><a class="reference internal" href="#learning-and-blocking">Learning and Blocking</a></li>
 <li><a class="reference internal" href="#http-compliancy-check-bad-host-header-value">HTTP Compliancy Check - Bad Host Header Value</a></li>
 <li><a class="reference internal" href="#http-compliancy-check-multiple-host-headers">HTTP Compliancy Check - Multiple Host Headers</a></li>
+<li><a class="reference internal" href="#evasion-techniques">Evasion Techniques</a></li>
 </ul>
 </li>
 </ul>
@@ -253,7 +254,7 @@
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
         <h4>
-          <a href="/">Cloud Docs Home</a> &gt; <a href="../../index.html">GoodWAFSec Docs</a>
+          <a href="/">Cloud Docs Home</a> &gt; <a href="../../index.html">WAF141</a>
           <span class="right"><a href="../../genindex.html">Index</a></span>
         </h4>
         
@@ -274,14 +275,15 @@
 <h2>Apply Security Policy<a class="headerlink" href="#apply-security-policy" title="Permalink to this headline">¶</a></h2>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">To clearly demonstrate just the protocol compliance protection, on the <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code> virtual server; PLEASE PERFORM THE FOLLOWING TWO STEPS:</p>
+<p class="last">To clearly demonstrate just the protocol compliance protection, on the <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code> virtual server; PLEASE PERFORM THE FOLLOWING TWO STEPS:</p>
 </div>
 <ol class="arabic simple">
-<li><strong>Remove</strong> the previously created DoS profile and bot logging profile.</li>
+<li>Navigate to the <strong>webgoat.f5.demo_https_vs</strong> virtual, then its <strong>Security</strong> tab.</li>
+<li><strong>Remove</strong> the previously created Bot Defense <strong>(webgoat_bot)</strong> profile and bot logging profile <strong>(bot-defense)</strong>.</li>
 <li><strong>Enable</strong> the <code class="docutils literal notranslate"><span class="pre">lab1_webgoat_waf</span></code> Security Policy</li>
 </ol>
 <p>Your virtual should look like this</p>
-<a class="reference internal image-reference" href="../../_images/image18.PNG"><img alt="../../_images/image18.PNG" src="../../_images/image18.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image1.png"><img alt="../../_images/image1.png" src="../../_images/image1.png" style="width: 600px;" /></a>
 </div>
 <div class="section" id="burp-ing-the-app">
 <h2>Burp’ing the App<a class="headerlink" href="#burp-ing-the-app" title="Permalink to this headline">¶</a></h2>
@@ -297,14 +299,14 @@ We will be manually sending two different attack types to demonstrate the protoc
 <ol class="arabic simple">
 <li>Open Burp by clicking the icon in the system tray at the top of the screen. (If it offers an update, please decline)</li>
 </ol>
-<img alt="../../_images/burp.PNG" src="../../_images/burp.PNG" />
+<img alt="../../_images/burp.png" src="../../_images/burp.png" />
 <ol class="arabic simple" start="2">
 <li>This will be a temporary project so click <strong>next</strong> to proceed and choose “Use Burp Defaults” on the next screen.</li>
 <li>Click <strong>Start Burp</strong> and navigate to the <strong>Repeater</strong> tab once opened.</li>
-<li>Under the <strong>Request</strong> tab paste in the following http request, remove any whitespace, or use the text version on the desktop, and click <strong>Go</strong>.</li>
+<li>Under the <strong>Request</strong> tab paste in the following http request, remove any whitespace or use the text version on the desktop (go to waf141 folder on Desktop, file is called NoHostHeader.txt), and click <strong>Go</strong>.</li>
 </ol>
 <p>Attack 1: No Host Header - <strong>Run this 10 times.</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">webgoat</span><span class="o">.</span><span class="n">f5demo</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">WebGoat</span><span class="o">/</span><span class="n">login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">webgoat</span><span class="o">.</span><span class="n">f5</span><span class="o">.</span><span class="n">demo</span><span class="o">/</span><span class="n">WebGoat</span><span class="o">/</span><span class="n">login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="p">:</span> <span class="n">R2D2</span>
 <span class="n">Pragma</span><span class="p">:</span> <span class="n">no</span><span class="o">-</span><span class="n">cache</span>
 <span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="p">:</span> <span class="n">no</span><span class="o">-</span><span class="n">cache</span>
@@ -321,47 +323,56 @@ We will be manually sending two different attack types to demonstrate the protoc
 <ol class="arabic simple" start="5">
 <li>A popup will appear asking for target details. Fill out the form as shown below.</li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image101.PNG"><img alt="../../_images/image101.PNG" src="../../_images/image101.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image101.png"><img alt="../../_images/image101.png" src="../../_images/image101.png" style="width: 600px;" /></a>
 <p>Request and Response should look like this</p>
-<a class="reference internal image-reference" href="../../_images/image51.PNG"><img alt="../../_images/image51.PNG" src="../../_images/image51.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image5.png"><img alt="../../_images/image5.png" src="../../_images/image5.png" style="width: 600px;" /></a>
 <ol class="arabic simple" start="6">
 <li>Navigate to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong> and clear the illegal request filter. You should see these requests being logged as legal but you may want to implement policy per the “Good WAF Protection recommendations”, to not allow this since it is not RFC compliant HTTP/1.1</li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image20.PNG"><img alt="../../_images/image20.PNG" src="../../_images/image20.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image20.png"><img alt="../../_images/image20.png" src="../../_images/image20.png" style="width: 600px;" /></a>
 </div>
 <div class="section" id="learning-and-blocking">
 <h2>Learning and Blocking<a class="headerlink" href="#learning-and-blocking" title="Permalink to this headline">¶</a></h2>
-<p>The first place we always take a look when we want to implement a new control is under learning and blocking settings.</p>
 <ol class="arabic simple">
 <li>Navigate to <strong>Security &gt; Application Security &gt; Policy Building &gt; Learning and Blocking Settings</strong> and look for <strong>HTTP Protocol Compliance failed</strong></li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image61.PNG"><img alt="../../_images/image61.PNG" src="../../_images/image61.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise3-image1.png"><img alt="../../_images/module2Lab1Excercise3-image1.png" src="../../_images/module2Lab1Excercise3-image1.png" style="width: 600px;" /></a>
 <ol class="arabic simple" start="2">
 <li>Notice the violation is set to learn only and is not enabled by default in a Rapid Deployment Policy. That is why the request was seen as legal and there was no alert in the event logs.</li>
 <li>Since learning <strong>was</strong> on by default there must be a learning suggestion ready for us. Let’s go take a look.</li>
 <li>We want to specifically find the learning suggestion for <strong>HTTP protocol compliance failed - HTTP Check: No Host header in HTTP/1.1 request</strong></li>
-<li>Navigate to <strong>Security &gt; Application Security &gt; Policy Building &gt; Traffic Learning</strong> and click on the Magnifying Glass.</li>
+<li>Navigate to <strong>Security &gt; Application Security &gt; Policy Building &gt; Traffic Learning</strong> and click on the search.</li>
+<li>In the suggestion section select <strong>HTTP Protocol Compiance</strong>.</li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image111.PNG"><img alt="../../_images/image111.PNG" src="../../_images/image111.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise3-image2.png"><img alt="../../_images/module2Lab1Excercise3-image2.png" src="../../_images/module2Lab1Excercise3-image2.png" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <ol class="arabic simple" start="6">
-<li>Under the Advanced Tab move the slider to the left so you can see alerts with a learning score of less than 5 and click <strong>Apply Filter</strong></li>
+<li>Under the Advanced Tab move the slider to the left so you can see alerts with a learning score of less than 50 and click <strong>Apply Filter</strong></li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image121.PNG"><img alt="../../_images/image121.PNG" src="../../_images/image121.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise3-image3.png"><img alt="../../_images/module2Lab1Excercise3-image3.png" src="../../_images/module2Lab1Excercise3-image3.png" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <ol class="arabic simple" start="7">
-<li>Note the action ASM is suggesting that you take - <strong>“Enable HTTP Check”</strong></li>
+<li>Note the action ASM is suggesting that you take - <strong>“Enable HTTP Check”</strong>. As in the example, you may ahve multiple suggestion for HTTP Protocol Compliance Failed, they should all be from the burp test.</li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image131.PNG"><img alt="../../_images/image131.PNG" src="../../_images/image131.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise3-image4.png"><img alt="../../_images/module2Lab1Excercise3-image4.png" src="../../_images/module2Lab1Excercise3-image4.png" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <ol class="arabic simple" start="8">
 <li>Click <strong>Accept Suggestion</strong> and then browse back to <strong>Security &gt; Application Security &gt; Policy Building &gt; Learning and Blocking Settings &gt; HTTP Protocol Compliance failed</strong> and notice that by accepting the learning suggestion ASM has now enabled the protection but it is still in learning mode so <strong>uncheck</strong> that manually.</li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image71.PNG"><img alt="../../_images/image71.PNG" src="../../_images/image71.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise3-image5.png"><img alt="../../_images/module2Lab1Excercise3-image5.png" src="../../_images/module2Lab1Excercise3-image5.png" style="width: 600px;" /></a>
 <ol class="arabic simple" start="9">
-<li><strong>Be sure you have clicked “Save” and Applied the Policy prior to proceeding.</strong></li>
+<li><strong>Be sure you have clicked “Save” and Apply the Policy prior to proceeding.</strong></li>
 <li>Go back to <strong>Burp</strong> and run the attack again one or more times.</li>
 </ol>
-<p>11. Browse to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong> on the BIG-IP GUI. Clear the <strong>Illegal Request</strong> option to view all requests received by the security policy.
+<p>11. Browse to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong> on the BIG-IP GUI.
 You should now see the alerts since we have enabled this compliancy check and turned off learning.</p>
-<a class="reference internal image-reference" href="../../_images/image91.PNG"><img alt="../../_images/image91.PNG" src="../../_images/image91.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise3-image6.png"><img alt="../../_images/module2Lab1Excercise3-image6.png" src="../../_images/module2Lab1Excercise3-image6.png" style="width: 600px;" /></a>
 </div>
 <div class="section" id="http-compliancy-check-bad-host-header-value">
 <h2>HTTP Compliancy Check - Bad Host Header Value<a class="headerlink" href="#http-compliancy-check-bad-host-header-value" title="Permalink to this headline">¶</a></h2>
@@ -370,13 +381,20 @@ You should now see the alerts since we have enabled this compliancy check and tu
 If we allow bad host header values they can be used to Fuzz web servers and gather system information. Successful exploitation of this attack could allow for the execution of XSS arbitrary code.</p>
 <p>1. Navigate to <strong>Security &gt; Application Security &gt; Policy Building &gt; Learning and Blocking Settings &gt; HTTP Protocol Compliance failed</strong> and find <strong>Bad host header value</strong>
 Notice that by default this is also in learning mode but disabled by default in a Rapid Deployment Policy.</p>
-<a class="reference internal image-reference" href="../../_images/image141.PNG"><img alt="../../_images/image141.PNG" src="../../_images/image141.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise4-image1.png"><img alt="../../_images/module2Lab1Excercise4-image1.png" src="../../_images/module2Lab1Excercise4-image1.png" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <ol class="arabic simple" start="2">
 <li><strong>Uncheck</strong> the Learn box and <strong>Check</strong> the Enable box. Scroll up, click <strong>Save</strong> and <strong>Apply Policy</strong>.</li>
-<li>Go back to <strong>Burp</strong> and under the <strong>Request</strong> tab paste in the following http request, remove any whitespace, or use the text version on the desktop, and click <strong>Go</strong>.</li>
 </ol>
+<p>3. Go back to <strong>Burp</strong> and under the <strong>Request</strong> tab paste in the following http request, remove any whitespace, or use the text version on the desktop (go to the waf141 folder on the Desktop, file is called BadHostHeader.txt), and click <strong>Go</strong>.
+Replace password with the password provided by the instructor.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <p>Attack 2: XSS in HOST Header</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">webgoat</span><span class="o">.</span><span class="n">f5demo</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">WebGoat</span><span class="o">/</span><span class="n">login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">webgoat</span><span class="o">.</span><span class="n">f5</span><span class="o">.</span><span class="n">demo</span><span class="o">/</span><span class="n">WebGoat</span><span class="o">/</span><span class="n">login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="p">:</span> <span class="n">BB8</span>
 <span class="n">Pragma</span><span class="p">:</span> <span class="n">no</span><span class="o">-</span><span class="n">cache</span>
 <span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="p">:</span> <span class="n">no</span><span class="o">-</span><span class="n">cache</span>
@@ -387,11 +405,11 @@ Notice that by default this is also in learning mode but disabled by default in 
 <span class="n">username</span><span class="o">=</span><span class="n">f5student</span><span class="o">&amp;</span><span class="n">password</span><span class="o">=</span><span class="n">password</span>
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../../_images/image151.PNG"><img alt="../../_images/image151.PNG" src="../../_images/image151.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise4-image2.png"><img alt="../../_images/module2Lab1Excercise4-image2.png" src="../../_images/module2Lab1Excercise4-image2.png" style="width: 600px;" /></a>
 <ol class="arabic simple" start="4">
 <li>Browse to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong> and review the alert for this attempted attack. Note the alert severity is much higher (4) for this attack type due to the risk it presents.</li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image161.PNG"><img alt="../../_images/image161.PNG" src="../../_images/image161.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise4-image3.png"><img alt="../../_images/module2Lab1Excercise4-image3.png" src="../../_images/module2Lab1Excercise4-image3.png" style="width: 600px;" /></a>
 <ol class="arabic simple" start="5">
 <li>Click <strong>Export Request</strong> and review the detailed report. Notice the XSS alerts and how they are currently still in staging. We will cover this in the next module.</li>
 </ol>
@@ -411,7 +429,7 @@ This is an example of an HTTP Request Smuggling Attack</p>
 <li>Disable learning and Enable the Compliancy Check for <strong>Multiple Host Headers</strong> in learning and blocking settings.</li>
 <li>Use <strong>BURP</strong> to perform the Attack</li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">webgoat</span><span class="o">.</span><span class="n">f5demo</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">WebGoat</span><span class="o">/</span><span class="n">login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">webgoat</span><span class="o">.</span><span class="n">f5</span><span class="o">.</span><span class="n">demo</span><span class="o">/</span><span class="n">WebGoat</span><span class="o">/</span><span class="n">login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="n">User</span><span class="o">-</span><span class="n">Agent</span><span class="p">:</span> <span class="n">BB8</span>
 <span class="n">Pragma</span><span class="p">:</span> <span class="n">no</span><span class="o">-</span><span class="n">cache</span>
 <span class="n">Cache</span><span class="o">-</span><span class="n">Control</span><span class="p">:</span> <span class="n">no</span><span class="o">-</span><span class="n">cache</span>
@@ -426,8 +444,39 @@ This is an example of an HTTP Request Smuggling Attack</p>
 <ol class="arabic simple" start="3">
 <li>Review Event Logs to ensure the attack is being mitigated. Notice the alert level is lower for this attack type due to less risk than a potential XSS as seen in the previous exercise.</li>
 </ol>
-<a class="reference internal image-reference" href="../../_images/image181.PNG"><img alt="../../_images/image181.PNG" src="../../_images/image181.PNG" style="width: 600px;" /></a>
-<a class="reference internal image-reference" href="../../_images/image19.PNG"><img alt="../../_images/image19.PNG" src="../../_images/image19.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise5-image1.png"><img alt="../../_images/module2Lab1Excercise5-image1.png" src="../../_images/module2Lab1Excercise5-image1.png" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/module2Lab1Excercise5-image2.png"><img alt="../../_images/module2Lab1Excercise5-image2.png" src="../../_images/module2Lab1Excercise5-image2.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="evasion-techniques">
+<h2>Evasion Techniques<a class="headerlink" href="#evasion-techniques" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Open a new Private Window in Firefox and navigate to the WebGoat login page (<a class="reference external" href="https://webgoat.f5.demo/WebGoat/login">https://webgoat.f5.demo/WebGoat/login</a>).</li>
+<li>Enter <strong>%253Cscript%253E</strong> in Username field and <strong>a</strong> for the Password field. Click <strong>Sign-in</strong>. Of course this user does not exist in the WebGoat database and will not be logged in. What would expect in the ASM events?</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/module1Lab1Excercise1-image18.png"><img alt="../../_images/module1Lab1Excercise1-image18.png" src="../../_images/module1Lab1Excercise1-image18.png" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Go to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong>. Do you see anything?</li>
+<li>If you don’t, what do you think needs to be done? This excercise if left up to the student.</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The answer is very similar to something you have done before.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <p><strong>This concludes module 2</strong></p>
 </div>
 </div>

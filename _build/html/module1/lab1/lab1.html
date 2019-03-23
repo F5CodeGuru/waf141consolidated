@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Exercise 1.1: Policy Creation &#8212; GoodWAFSec Docs 1.0 documentation</title>
+    <title>Exercise 1.1: Policy Creation &#8212; WAF141 1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/css/f5.css" type="text/css" />
@@ -18,7 +18,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Exercise 1.3: Proactive Bot Defense" href="../lab2/lab2.html" />
+    <link rel="next" title="Exercise 1.3: Bot Defense" href="../lab2/lab2.html" />
     <link rel="prev" title="Module 1: Base Policy Creation" href="../module1.html" />
 <!--
 # Copyright 2017 F5 Networks
@@ -207,7 +207,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-3 col-md-3 sidebartoc">
-         <h4><a href="../../">GoodWAFSec Docs 1.0</a></h4>
+         <h4><a href="../../">WAF141 1.0</a></h4>
   <p class="caption">
    <span class="caption-text">Current Page</span>
   </p>
@@ -233,7 +233,7 @@
                         title="previous chapter">Module 1: Base Policy Creation</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../lab2/lab2.html"
-                        title="next chapter">Exercise 1.3: Proactive Bot Defense</a></p>
+                        title="next chapter">Exercise 1.3: Bot Defense</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -257,7 +257,7 @@
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
         <h4>
-          <a href="/">Cloud Docs Home</a> &gt; <a href="../../index.html">GoodWAFSec Docs</a>
+          <a href="/">Cloud Docs Home</a> &gt; <a href="../../index.html">WAF141</a>
           <span class="right"><a href="../../genindex.html">Index</a></span>
         </h4>
         
@@ -278,18 +278,19 @@
 <p class="last">If the Operating system prompts you to update system software, please decline</p>
 </div>
 <ol class="arabic simple">
-<li>RDP to the the jumpbox, launch Chrome (please be patient and don’t click the icon multiple times. Chrome can take a few seconds to launch), click the BIG-IP bookmark and login to TMUI. admin/password</li>
+<li>RDP to client01, launch Chrome (please be patient and don’t click the icon multiple times. Chrome can take a few seconds to launch), click the BIG-IP bookmark and login to TMUI. admin/&lt;password&gt;. You may have to click Proceed to bypass a untrusted certicate.</li>
+<li>Open a terminal, cd to the waf141 folder</li>
+<li>Then run the below to create the 4 virtuals used in this lab. Ignore any warnings about certificates.</li>
 </ol>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The XRDP service automatically opens a persistent shell in the top left corner of your desktop. Type <strong>exit</strong> to make it go away.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 prepare141Lab.py
+</pre></div>
 </div>
-<a class="reference internal image-reference" href="../../_images/image25.PNG"><img alt="../../_images/image25.PNG" src="../../_images/image25.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/prepare141.png"><img alt="../../_images/prepare141.png" src="../../_images/prepare141.png" style="width: 600px;" /></a>
 <p>Please ensure that four virtual servers are configured before you begin:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_overlay_vs</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_http_vs</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_overlay_vs</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_http_vs</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">automation_vs</span></code></li>
 </ul>
 </div>
@@ -305,7 +306,7 @@
 <li>Click on the <strong>Advanced</strong> button (Top-Right) to ensure that all the available policy creation options are displayed.</li>
 <li>Name the security policy <code class="docutils literal notranslate"><span class="pre">lab1_webgoat_waf</span></code> and notice that the <strong>Policy Type</strong> is security.</li>
 <li>Verify the <strong>Policy Template</strong> is set to <code class="docutils literal notranslate"><span class="pre">Rapid</span> <span class="pre">Deployment</span> <span class="pre">Policy</span></code> and notice it is a transparent security policy by default</li>
-<li>Assign this policy to the <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code> from the Virtual Server drop down.</li>
+<li>Assign this policy to the <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code> from the Virtual Server drop down.</li>
 <li>Confirm that the Application Language is set to <strong>UTF-8</strong>.</li>
 <li>Accept the remaining default policy settings and click <strong>Create Policy</strong> to complete the policy creation process.</li>
 </ol>
@@ -314,14 +315,22 @@
 <p class="last">After policy creation is complete, the properties will be displayed for review within the Policies List menu.</p>
 </div>
 <p><strong>Your settings should reflect the figures below:</strong></p>
-<a class="reference internal image-reference" href="../../_images/image2.PNG"><img alt="../../_images/image2.PNG" src="../../_images/image2.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module1Lab1Excercise1-image1.png"><img alt="../../_images/module1Lab1Excercise1-image1.png" src="../../_images/module1Lab1Excercise1-image1.png" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>The resulting policy</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <a class="reference internal image-reference" href="../../_images/imagefix.PNG"><img alt="../../_images/imagefix.PNG" src="../../_images/imagefix.PNG" style="width: 600px;" /></a>
 </div>
 <div class="section" id="verify-waf-profile-is-applied-to-virtual-server">
 <h2>Verify WAF Profile is Applied to Virtual Server<a class="headerlink" href="#verify-waf-profile-is-applied-to-virtual-server" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>In the configuration utility navigate to <strong>Local Traffic &gt; Virtual Servers</strong>, click on <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code>.</li>
-<li>Click on <strong>Policies</strong> under the <strong>Security</strong> tab at the top of the <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code> details menu.</li>
+<li>In the configuration utility navigate to <strong>Local Traffic &gt; Virtual Servers</strong>, click on <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code>.</li>
+<li>Click on <strong>Policies</strong> under the <strong>Security</strong> tab at the top of the <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code> details menu.</li>
 <li>In the <strong>Application Security Policy</strong> drop down menu, ensure <strong>Application Security Policy</strong> is <code class="docutils literal notranslate"><span class="pre">Enabled...</span></code> and the <strong>Policy:</strong> drop-down selection shows the <code class="docutils literal notranslate"><span class="pre">lab1_webgoat_waf</span></code> policy.</li>
 <li>Notice Log Profile is set to <code class="docutils literal notranslate"><span class="pre">Disabled</span></code>.</li>
 </ol>
@@ -336,10 +345,10 @@
 <li>Select the <code class="docutils literal notranslate"><span class="pre">Local</span> <span class="pre">Storage</span></code> value for the <strong>Storage Destination</strong> configuration option.</li>
 <li>Select the <code class="docutils literal notranslate"><span class="pre">For</span> <span class="pre">all</span> <span class="pre">Requests</span></code> value for the <strong>Response Logging</strong> configuration option.</li>
 <li>Select the <code class="docutils literal notranslate"><span class="pre">All</span> <span class="pre">requests</span></code> value for the <strong>Request Type</strong> configuration option.</li>
-<li>Click <strong>Finished.</strong></li>
+<li>Click <strong>Create.</strong></li>
 </ol>
 <blockquote>
-<div><a class="reference internal image-reference" href="../../_images/image5.PNG"><img alt="../../_images/image5.PNG" src="../../_images/image5.PNG" style="width: 600px;" /></a>
+<div><a class="reference internal image-reference" href="../../_images/module1Lab1Excercise1-image7.png"><img alt="../../_images/module1Lab1Excercise1-image7.png" src="../../_images/module1Lab1Excercise1-image7.png" style="width: 600px;" /></a>
 </div></blockquote>
 <p><strong>Question:</strong> Would logging all requests and responses in a production environment be a best practice?</p>
 <p><strong>Answer:</strong> This adds 50% or more to the overhead on the log engine and would not typically be used outside of troubleshooting or high security environments that are appropriately sized.</p>
@@ -347,8 +356,8 @@
 <div class="section" id="apply-waf-logging-profile">
 <h2>Apply WAF Logging Profile<a class="headerlink" href="#apply-waf-logging-profile" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>Under <strong>Local Traffic &gt; Virtual Servers</strong>, click on <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code>.</li>
-<li>Click on <strong>Policies</strong> under the <strong>Security</strong> tab at the top of the <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code> details menu.</li>
+<li>Under <strong>Local Traffic &gt; Virtual Servers</strong>, click on <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code>.</li>
+<li>Click on <strong>Policies</strong> under the <strong>Security</strong> tab at the top of the <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code> details menu.</li>
 <li>In the <strong>Log Profile</strong> drop down menu, select <code class="docutils literal notranslate"><span class="pre">Enabled...</span></code></li>
 <li>Within the <strong>Available</strong> logging profiles menu, select <code class="docutils literal notranslate"><span class="pre">waf_allrequests</span></code> and then click the <strong>&lt;&lt;</strong> arrows to move the logging policy to the <strong>Selected</strong> profile.</li>
 <li>Click on the Update button to apply the policy.</li>
@@ -358,25 +367,23 @@
 <div class="section" id="test-waf-policy">
 <h2>Test WAF Policy<a class="headerlink" href="#test-waf-policy" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li>Open the Google Chrome browser and navigate to <code class="docutils literal notranslate"><span class="pre">https://webgoat.f5demo.com/WebGoat/login</span></code> You’ll find a toolbar shortcut for the webgoat link.</li>
+<li>Open the Google Chrome browser and navigate to <code class="docutils literal notranslate"><span class="pre">https://webgoat.f5.demo/WebGoat/login</span></code> You’ll find a toolbar shortcut for the webgoat link.</li>
 </ol>
 <a class="reference internal image-reference" href="../../_images/image7.PNG"><img alt="../../_images/image7.PNG" src="../../_images/image7.PNG" style="width: 600px;" /></a>
-<ol class="arabic" start="2">
-<li><p class="first">Login using <strong>f5student/password</strong> credentials and interact with the webgoat application by browsing. Please refrain from experimenting with the site using any familiar “exploit” techniques.</p>
-</li>
-<li><p class="first">On the BIG-IP, navigate to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong>.</p>
-</li>
-<li><p class="first">Clear the default <strong>“Illegal Requests”</strong> filter by clicking the x.</p>
-<blockquote>
-<div><a class="reference internal image-reference" href="../../_images/image8.PNG"><img alt="../../_images/image8.PNG" src="../../_images/image8.PNG" style="width: 600px;" /></a>
-</div></blockquote>
-</li>
-<li><p class="first">Verify that requests are being logged by the WAF. You should be able to see both the raw client requests and server responses.</p>
+<ol class="arabic simple" start="2">
+<li>Login using <strong>f5student/password</strong> credentials and interact with the webgoat application by browsing. Please refrain from experimenting with the site using any familiar “exploit” techniques.</li>
+<li>On the BIG-IP, navigate to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong>.</li>
+<li>Verify that requests are being logged by the WAF. You should be able to see both the raw client requests and server responses.</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <blockquote>
 <div><a class="reference internal image-reference" href="../../_images/image9.PNG"><img alt="../../_images/image9.PNG" src="../../_images/image9.PNG" style="width: 600px;" /></a>
 </div></blockquote>
-</li>
-</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 <div class="section" id="exercise-1-2-geolocation-and-ip-intelligence">
@@ -394,7 +401,7 @@ them to Disallowed Geolocations. <strong>Save</strong> and then <strong>Apply Po
 at your border router (layer 3), you may decide to geo-enforce at
 ASM (Layer 7) if no private IP’s will be accessing the site.</p>
 </div>
-<a class="reference internal image-reference" href="../../_images/image10.PNG"><img alt="../../_images/image10.PNG" src="../../_images/image10.PNG" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../../_images/module1Lab1Excercise2-image1.png"><img alt="../../_images/module1Lab1Excercise2-image1.png" src="../../_images/module1Lab1Excercise2-image1.png" style="width: 600px;" /></a>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">Remember to click on the <strong>Apply Policy</strong> button (top right) to commit security policy changes.</p>
@@ -420,7 +427,7 @@ this “trick” to work to demonstrate a global range of source IP
 addresses.</p>
 </div>
 </li>
-<li><p class="first">Open <strong>Local Traffic &gt; Virtual Servers</strong> and click on <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code>. Go to the <strong>Resources</strong>
+<li><p class="first">Open <strong>Local Traffic &gt; Virtual Servers</strong> and click on <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code>. Go to the <strong>Resources</strong>
 horizontal tab and click on <strong>Manage</strong> in the <strong>iRules</strong> section.</p>
 <a class="reference internal image-reference" href="../../_images/image11.PNG"><img alt="../../_images/image11.PNG" src="../../_images/image11.PNG" style="width: 600px;" /></a>
 </li>
@@ -431,16 +438,25 @@ click <strong>Finished</strong>.</p>
 </ol>
 <p>6. We now need to tell ASM to trust the XFF header by turning on the <strong>Trust XFF Header</strong> feature in the policy.
 Navigate to <strong>Application Security &gt; Policy &gt; Policy Properties</strong> and hit the dropdown for <strong>Advanced View</strong>.
-You can now check the box to <strong>Trust XFF Header</strong> and click <strong>Save</strong> then <strong>Apply Policy</strong></p>
+You can now set <strong>Trust XFF Header</strong> to <strong>Enabled</strong> and click <strong>Save Changes</strong> then <strong>Apply</strong></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <a class="reference internal image-reference" href="../../_images/image15.PNG"><img alt="../../_images/image15.PNG" src="../../_images/image15.PNG" style="width: 600px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Regarding Trust XFF - you would do this if ASM is deployed behind an internal or other trusted proxy. Then, the system uses the IP address that initiated the connection to the proxy instead of the internal proxy’s IP address. This option is useful for logging, web scraping, anomaly detection, and the geolocation feature.</p>
 </div>
 <p><strong>You should not configure trusted XFF headers if you think the HTTP header may be spoofed, or crafted, by a malicious client.</strong></p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <ol class="arabic simple">
-<li>Open a new <strong>Google Chrome Private Browsing</strong> window and connect to
-<code class="docutils literal notranslate"><span class="pre">https://webgoat.f5demo.com/WebGoat/login</span></code>. Login and select a few links on the WebGoat page.</li>
+<li>Open a new <strong>Firefox Private</strong> window and connect to
+<code class="docutils literal notranslate"><span class="pre">https://webgoat.f5.demo/WebGoat/login</span></code>. Login and select a few links on the WebGoat page.</li>
 <li>Navigate to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong>.</li>
 </ol>
 <a class="reference internal image-reference" href="../../_images/image13.PNG"><img alt="../../_images/image13.PNG" src="../../_images/image13.PNG" style="width: 600px;" /></a>
@@ -464,12 +480,12 @@ For all categories <strong>select Alarm</strong>. Click on <strong>Save</strong>
 <p class="first admonition-title">Note</p>
 <p class="last">In order to create traffic with malicious sources for the purposes of this lab we have created another special configuration item for you.</p>
 </div>
-<p>There is an iRule that you will apply to the <code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code> virtual server.
+<p>There is an iRule that you will apply to the <code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code> virtual server.
 This iRule will insert an X-Forward-For header with the value of a malicious United States source IP address. (Remember US is an allowed Geolocation)</p>
 <ol class="arabic">
 <li><dl class="first docutils">
 <dt>Navigate to <strong>Local Traffic &gt; Virtual Server &gt; Virtual Servers List</strong> and select the</dt>
-<dd><p class="first last"><code class="docutils literal notranslate"><span class="pre">webgoat.f5demo.com_https_vs</span></code> virtual server.</p>
+<dd><p class="first last"><code class="docutils literal notranslate"><span class="pre">webgoat.f5.demo_https_vs</span></code> virtual server.</p>
 </dd>
 </dl>
 </li>
@@ -477,14 +493,14 @@ This iRule will insert an X-Forward-For header with the value of a malicious Uni
 </li>
 <li><p class="first">Move the <strong>ip_rep_irule</strong> irule to the <strong>Enabled</strong> pane of the <strong>Resource Management</strong> configuration and Click <strong>Finished</strong>.</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="../../_images/image16.PNG"><img alt="../../_images/image16.PNG" src="../../_images/image16.PNG" style="width: 600px;" /></a>
+<div><a class="reference internal image-reference" href="../../_images/module1Lab1Excercise2-image6.png"><img alt="../../_images/module1Lab1Excercise2-image6.png" src="../../_images/module1Lab1Excercise2-image6.png" style="width: 600px;" /></a>
 </div></blockquote>
 </li>
-<li><p class="first">Open a new private browsing window in Google Chrome and use the bookmark for <strong>WebGoat</strong> to browse the site. Login and Click on one or two items.</p>
+<li><p class="first">Open a new Private Browsing window in Firefox and enter <a class="reference external" href="https://webgoat.f5.demo/WebGoat/login">https://webgoat.f5.demo/WebGoat/login</a> to browse the site. Login using the f5student:&lt;password provided by instructor&gt; and Click on one or two items. You may need to click Add Exception to bypass an untrusted certificate in Firefox.</p>
 </li>
 <li><p class="first">Navigate to <strong>Security &gt; Event Logs &gt; Application &gt; Requests</strong> and review the log entries. Since you configured IP Intelligence violations to alarm you will not need to change the filter. Select the most recent entry and examine why the request is illegal. What IP address did the request come from?</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="../../_images/image22.PNG"><img alt="../../_images/image22.PNG" src="../../_images/image22.PNG" style="width: 600px;" /></a>
+<div><a class="reference internal image-reference" href="../../_images/module1Lab1Excercise2-image8.png"><img alt="../../_images/module1Lab1Excercise2-image8.png" src="../../_images/module1Lab1Excercise2-image8.png" style="width: 600px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">For more information click on the violation hyperlink to see the IPI category that this IP belongs to. You can also click “All Details” at the top right.</p>
@@ -515,7 +531,7 @@ bit 7 - Phishing</p>
 		        <a href="../module1.html" title="Module 1: Base Policy Creation" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
            
            
-              <a href="../lab2/lab2.html" title="Exercise 1.3: Proactive Bot Defense" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+              <a href="../lab2/lab2.html" title="Exercise 1.3: Bot Defense" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
            
 		     </div>
          </div>

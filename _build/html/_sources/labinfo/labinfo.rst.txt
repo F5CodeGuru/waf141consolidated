@@ -34,9 +34,9 @@ Lab Topology
 The network topology implemented for this lab is very simple. The following
 components have been included in your lab environment:
 
--  1 x Ubuntu Linux 16.04 client
--  1 x F5 BIG-IP VE (v13.1.0.2) running ASM and LTM
--  1 x Ubuntu Linux 16.04 server
+-  1 x Ubuntu Linux 18.04 client
+-  1 x F5 BIG-IP VE (v14.1.0.2) running WAF and LTM
+-  1 x Ubuntu Linux 18.04 server
 
 The following table lists VLANS, IP Addresses and Credentials for all
 components:
@@ -73,4 +73,4 @@ A graphical representation of the lab:
 
 |labDiagram|
 
-.. |labDiagram| image:: images/Agility2018LabDiagram.png
+.. |labDiagram| image:: images/LabDiagram.PNG
