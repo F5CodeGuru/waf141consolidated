@@ -77,7 +77,7 @@ Request and Response should look like this
 .. image:: images/image5.png
     :width: 600 px
 
-6. Navigate to **Security > Event Logs > Application > Requests** and clear the illegal request filter. You should see these requests being logged as legal but you may want to implement policy per the "Good WAF Protection recommendations", to not allow this since it is not RFC compliant HTTP/1.1
+6. Navigate to **Security > Event Logs > Application > Requests** (the illegal request filter should be cleared). You should see these requests being logged as legal but you may want to implement policy per the "Good WAF Protection recommendations", to not allow this since it is not RFC compliant HTTP/1.1
 
 .. image:: images/image20.png
     :width: 600 px

@@ -199,7 +199,7 @@ Geolocation
        :width: 600 px
 
 6. We now need to tell ASM to trust the XFF header by turning on the **Trust XFF Header** feature in the policy.
-Navigate to **Application Security > Policy > Policy Properties** and hit the dropdown for **Advanced View**.
+Navigate to **Application Security > Policy**. Select the lab1_webgoat_waf policy and hit the dropdown for **Advanced View**.
 You can now set **Trust XFF Header** to **Enabled** and click **Save Changes** then **Apply**
 
 |

@@ -201,7 +201,7 @@ cURL is considered an **HTTP Library tool**.
 
 #. Click **Add**
 
-#. Change the curl HTTP Library action from **CAPTCHA** to **Block** under
+#. Change the curl HTTP Library action from **CAPTCHA** to **TCP Reset** under
 
 |
 
@@ -228,7 +228,7 @@ cURL is considered an **HTTP Library tool**.
 
 **Whitelist and Report on cURL:**
 
-1. Edit the **Mitigation Settingsd Exceptions** once again under the **webgoat_bot** profile and change **curl** to **None**  and click **Save**.
+1. Edit the **Mitigation Settings Exceptions** once again under the **webgoat_bot** profile and change **curl** to **None**  and click **Save**.
 
 
 .. image:: images/image1_3_16.png
@@ -238,7 +238,7 @@ cURL is considered an **HTTP Library tool**.
 
 2. Run cURL again: ``curl https://webgoat.f5.demo/WebGoat/login -k -v | less`` and you should be back in business. By now you should know the expected output.
 
-3. Edit the **Mitigation Settingsd Exceptions** once again and change **curl** to **Report**  and click **Save**.
+3. Edit the **Mitigation Settings Exceptions** once again and change **curl** to **Report**  and click **Save**.
 
 
 .. image:: images/image1_3_17.png
